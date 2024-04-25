@@ -20,6 +20,36 @@ Morgan Kaufmann · 2004년 04월 08일 출시</b>
 
 </br>
 
+## 🚩 정리한 문서 목록
+
+ - [ARM Embedded System](https://github.com/erectbranch/ARM_System_Developers_Guide/tree/master/ch01)
+
+   > CISC vs RISC, RISC Design Philosophy(instructions, pipelines, registers, load-store architecture), ARM Design Philosophy
+   
+   > Embedded System Hardware(ARM processor, controller, peripheral, bus), ARM Bus Technology(master-slave, AMBA Bus Protocol), Memory(Hierarchies, Memory Width)
+
+   > Embedded System Software(Boot loader, Operating System, Application Software)
+
+ - [ARM Processor Fundamentals: Registers](https://github.com/erectbranch/ARM_System_Developers_Guide/tree/master/ch02/summary01)
+
+   > ARM Core Dataflow(Instruction Decoder, Sign Extend, Register File, Barrel Shifter, MAC, ALU, Address Register, Incrementer)
+
+   > > General Purpose Registers: 16 Data Registers(Stack Pointer, Link Register, Program Counter), 2 Process Status Registers(cpsr, spsr)
+   >
+   > > 20 Banked Registers(Fast Interrupt Request, Interrupt Request, Supervisor, Abort, Undefined)
+   
+   > Current Program Status Register(Condition flags, Interrupt Masks, Thumb state, Processor mode)
+
+ - [ARM Processor Fundamentals: Pipeline, Interrupt, Extensions](https://github.com/erectbranch/ARM_System_Developers_Guide/tree/master/ch02/summary02)
+
+   > Pipeline, Pipeline Executing Characteristics
+
+   > Exceptions, Interrupts, Vector Table
+
+   > Core Extensions: Cache, Tightly Coupled Memory
+
+</br>
+
 ## :mag: 목차
 
 ### 1. ARM Embedded Systems	
