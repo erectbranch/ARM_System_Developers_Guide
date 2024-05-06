@@ -4,7 +4,7 @@
 
 | 명령어 전/후 | 명령어 | 메모리 |
 | --- | --- | --- | 
-| **PRE** $\ \ $ `<pre-conditions>`<br/> $\quad \quad \ $ `<instructions/s>`<br/>**POST** `<post-conditions>` | `instructions{<cond>}{S} Rd, Rn, N` 등 |  `mem<data_size>[address]` |
+| **PRE** $\;$ `<pre-conditions>`<br/> $\quad \quad$ `<instructions/s>`<br/>**POST** `<post-conditions>` | `instructions{<cond>}{S} Rd, Rn, N` 등 |  `mem<data_size>[address]` |
 
 > e.g.,
 > > - `mem32[1024]`: 1KB 번지부터 시작하는 32-bit 데이터
@@ -167,7 +167,7 @@ cpsr
 </td>
 <td> 
 
-![logic shift left](images/logical_shift_left.png)
+![logic shift left](https://github.com/erectbranch/ARM_System_Developers_Guide/blob/master/ch03/summary01/images/logical_shift_left.png)
 
 </td>
 </tr>

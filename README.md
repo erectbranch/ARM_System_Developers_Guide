@@ -8,7 +8,7 @@
 </h1>
   
 <b>Andrew N. Sloss, Dominic Symes, Chris Wright 저</b></br>
-Morgan Kaufmann · 2004년 04월 08일 출시</b>
+Morgan Kaufmann · 2004년 04월 08일 출간</b>
 
 </div>
 
@@ -22,6 +22,8 @@ Morgan Kaufmann · 2004년 04월 08일 출시</b>
 
 ## 🚩 정리한 문서 목록
 
+### 📖 ARM Processor Fundamentals
+
  - [ARM Embedded System](https://github.com/erectbranch/ARM_System_Developers_Guide/tree/master/ch01)
 
    > CISC vs RISC, RISC Design Philosophy(instructions, pipelines, registers, load-store architecture), ARM Design Philosophy
@@ -30,23 +32,33 @@ Morgan Kaufmann · 2004년 04월 08일 출시</b>
 
    > Embedded System Software(Boot loader, Operating System, Application Software)
 
- - [ARM Processor Fundamentals: Registers](https://github.com/erectbranch/ARM_System_Developers_Guide/tree/master/ch02/summary01)
+ - [Dataflow and Registers](https://github.com/erectbranch/ARM_System_Developers_Guide/tree/master/ch02/summary01)
 
    > ARM Core Dataflow(Instruction Decoder, Sign Extend, Register File, Barrel Shifter, MAC, ALU, Address Register, Incrementer)
 
-   > > General Purpose Registers: 16 Data Registers(Stack Pointer, Link Register, Program Counter), 2 Process Status Registers(cpsr, spsr)
-   >
-   > > 20 Banked Registers(Fast Interrupt Request, Interrupt Request, Supervisor, Abort, Undefined)
+   > General Purpose Registers: 16 Data Registers(Stack Pointer, Link Register, Program Counter), 2 Process Status Registers(cpsr, spsr)
+   
+   > 20 Banked Registers(Fast Interrupt Request, Interrupt Request, Supervisor, Abort, Undefined)
    
    > Current Program Status Register(Condition flags, Interrupt Masks, Thumb state, Processor mode)
 
- - [ARM Processor Fundamentals: Pipeline, Interrupt, Extensions](https://github.com/erectbranch/ARM_System_Developers_Guide/tree/master/ch02/summary02)
+ - [Pipeline, Interrupt, Extensions](https://github.com/erectbranch/ARM_System_Developers_Guide/tree/master/ch02/summary02)
 
    > Pipeline, Pipeline Executing Characteristics
 
    > Exceptions, Interrupts, Vector Table
 
    > Core Extensions: Cache, Tightly Coupled Memory
+
+### 🗂 ARM Instruction Set
+
+ - [Data Processing Instructions](https://github.com/erectbranch/ARM_System_Developers_Guide/tree/master/ch03/summary01)
+
+   > Suffix s(Update Condition Flags), Move Instructions(MOV, MVN), Barrel Shifter(LSL, LSR, ASR, ROR, RRX) 
+
+   > Arithmetic Instructions(ADC, ADD, RSB, RSC, SBC, SUB), Logical Instructions(AND, ORR, EOR, BIC)
+
+   > Multiply Instructions(MLA, MUL), Long Multiply Instructions(SMLAL, SMULL, UMLAL, UMULL)
 
 </br>
 
