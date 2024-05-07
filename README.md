@@ -63,14 +63,13 @@ Morgan Kaufmann · 2004년 04월 08일 출간</b>
 
    > Multiply Instructions(MLA, MUL), Long Multiply Instructions(SMLAL, SMULL, UMLAL, UMULL)
 
- - [Branch Instructions, Load-Store Instructions](https://github.com/erectbranch/ARM_System_Developers_Guide/tree/master/ch03/summary01)
+ - [Branch Instructions, Load-Store Instructions](https://github.com/erectbranch/ARM_System_Developers_Guide/tree/master/ch03/summary02)
 
    > Branch Instructions(B, BL, BX, BLX)
 
    > Single-Register Transfer(LDR, STR, LDRB, STRB, LDRH, STRH, LDRSB, LDRSH), Addressimg Mode(Preindex with writeback, Preindex, Postindex)
 
    > Multiple-Register Transfer(LDM, STM), Addressimg Mode(IA, IB, DA, DB), Stack Operations(FA, FD, EA, ED)
-
 </details>
 
 </br>

@@ -94,8 +94,69 @@ backward                  ; infinite loop로 작동
 다음은 레지스터 `r1`이 포함하고 있는 주소(대상을 **base register**로 지칭)를 읽은 뒤, 메모리 주소 내 값을 `r0`에 불러오는 코드이다. (offset = 0)
 
 ```assembly
-       LDR    r0, [r1]     ; = LDR r0, [r1, #0]
+PRE     r0 = 0x00000002
+        r1 = 0x00000004
+        mem32[0x00000004] = 0x56882280
 ```
+
+<table>
+<tr>
+<td> </td> <td>  </td> 
+</tr>
+<tr>
+<td> 
+
+`LDR`<br/>load word(32-bit)
+
+</td>
+<td> 
+
+```assembly
+        LDR    r0, [r1]     ; = LDR r0, [r1, #0]
+POST    r0 = 0x56882280     
+        r1 = 0x00000004     
+```
+
+</td>
+<td rowspan="4">
+
+![LDR, LDRW, LDRB](images/LDR_LDRH_LDRB.png)
+
+</td>
+</tr>
+<tr>
+<td> 
+
+`LDRH`<br/>load half word(16-bit)
+
+</td>
+<td> 
+
+```assembly
+        LDRH   r0, [r1]     
+POST    r0 = 0x00002280     ; zero extended [31:16]
+        r1 = 0x00000004
+```
+
+</td>
+</tr>
+<tr>
+<td> 
+
+`LDRB`<br/>load byte(8-bit)
+
+</td>
+<td> 
+
+```assembly
+        LDRB   r0, [r1]
+POST    r0 = 0x00000080     ; zero extended [31:8]
+        r1 = 0x00000004 
+```
+
+</td>
+</tr>
+</table>
 
 ---
 
