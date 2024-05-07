@@ -205,8 +205,8 @@ POST    r0 = 0x01010101 ; r1번지 값
 
 | | | |
 | :---: | --- | --- |
-| `LDM` | load multiple register | $\{$ `Rd` $\}^{*N}$ `<-mem32[start address+4*N]` <br/>(optional `Rn` updated) |
-| `STM` | store multiple register | $\{$ `Rd` $\}^{*N}$ `->mem32[start address+4*N]` <br/>(optional `Rn` updated) |
+| `LDM` | load multiple register | `{Rd}` ${}^{*N}$ `<-mem32[start address+4*N]` <br/>(optional `Rn` updated) |
+| `STM` | store multiple register | `{Rd}` ${}^{*N}$ `->mem32[start address+4*N]` <br/>(optional `Rn` updated) |
 
 ---
 
@@ -276,6 +276,7 @@ POST
         r1 = 0x00000001
         r2 = 0x00000002
         r3 = 0x00000003
+
 
 
 
@@ -375,6 +376,7 @@ POST
         sp = 0x0008000c
 
 
+
 ```
 
 </td>
@@ -418,7 +420,7 @@ POST    mem32[0x9000] = 0x11112222  ; 레지스터 r1 값 저장
 
 다음 코드는 `SWP` 명령을 이용해, busy waiting 방식으로 binary semaphore를 구현한 예시다.
 
-```
+```assembly
 spin
         MOV     r1, =semaphore     ; r1 = semaphore 주소
         MOV     r2, #0             ; r2 = 0

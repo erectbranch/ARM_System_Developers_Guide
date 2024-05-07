@@ -22,7 +22,8 @@ Morgan Kaufmann · 2004년 04월 08일 출간</b>
 
 ## 🚩 정리한 문서 목록
 
-### 📖 ARM Processor Fundamentals
+<details open markdown="1">
+<summary><h3>📖 ARM Processor Fundamentals</h3></summary>
 
  - [ARM Embedded System](https://github.com/erectbranch/ARM_System_Developers_Guide/tree/master/ch01)
 
@@ -49,8 +50,10 @@ Morgan Kaufmann · 2004년 04월 08일 출간</b>
    > Exceptions, Interrupts, Vector Table
 
    > Core Extensions: Cache, Tightly Coupled Memory
+</details>
 
-### 🗂 ARM Instruction Set
+<details open markdown="1">
+<summary><h3>🗂 ARM Instruction Set</h3></summary>
 
  - [Data Processing Instructions](https://github.com/erectbranch/ARM_System_Developers_Guide/tree/master/ch03/summary01)
 
@@ -59,6 +62,16 @@ Morgan Kaufmann · 2004년 04월 08일 출간</b>
    > Arithmetic Instructions(ADC, ADD, RSB, RSC, SBC, SUB), Logical Instructions(AND, ORR, EOR, BIC)
 
    > Multiply Instructions(MLA, MUL), Long Multiply Instructions(SMLAL, SMULL, UMLAL, UMULL)
+
+ - [Branch Instructions, Load-Store Instructions](https://github.com/erectbranch/ARM_System_Developers_Guide/tree/master/ch03/summary01)
+
+   > Branch Instructions(B, BL, BX, BLX)
+
+   > Single-Register Transfer(LDR, STR, LDRB, STRB, LDRH, STRH, LDRSB, LDRSH), Addressimg Mode(Preindex with writeback, Preindex, Postindex)
+
+   > Multiple-Register Transfer(LDM, STM), Addressimg Mode(IA, IB, DA, DB), Stack Operations(FA, FD, EA, ED)
+
+</details>
 
 </br>
 
