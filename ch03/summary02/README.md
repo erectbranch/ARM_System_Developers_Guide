@@ -158,6 +158,67 @@ POST    r0 = 0x00000080     ; zero extended [31:8]
 </tr>
 </table>
 
+store instruction의 경우, 다음과 같이 작동한다. (`STRB` 예시 생략)
+
+<table>
+<tr>
+<td> </td> <td>  </td> 
+</tr>
+<tr>
+<td>
+
+PRE
+
+</td>
+<td> 
+
+```assembly
+PRE   r0 = 0x11223344
+      r1 = 0x00000000
+      mem32[0x00000000] = 0x09060B0A
+      mem32[0x00000004] = 0x56882280
+```
+
+</td>
+</tr>
+<tr>
+<td>
+
+`STR`<br/>store word(32-bit)
+
+</td>
+<td> 
+
+```assembly
+      STR r0, [r1, #4]
+POST  r0 = 0x11223344
+      r1 = 0x00000000
+      mem32[0x00000000] = 0x09060B0A
+      mem32[0x00000004] = 0x11223344     ; store r0 to mem32[r1+4]
+```
+
+</td>
+</tr>
+<tr>
+<td> 
+
+`STRH`<br/>store half word(16-bit)
+
+</td>
+<td> 
+
+```assembly
+      STRH r0, [r1, #2]
+POST  r0 = 0x11223344
+      r1 = 0x00000000
+      mem32[0x00000000] = 0x33440B0A     ; store [15:0] of r0 to mem32[r1+2]
+      mem32[0x00000004] = 0x56882280   
+```
+
+</td>
+</tr>
+</table>
+
 ---
 
 ### 3.3.1.1 Single-Register Load-Store Addressing Mode

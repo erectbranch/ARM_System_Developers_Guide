@@ -76,6 +76,11 @@ ALU에서 연산을 수행하기 전, 필요에 따라 **barrel shifter**에서 
 
 다음은 배럴 시프터를 사용하는 데이터 처리 명령어를 정리한 도표이다. (**x**: register, **y**: shift amount)
 
+
+<table>
+<tr>
+<td>
+
 > Syntax e.g.,
 >
 > > - `Rm, LSL #shift_imm`: Logical shift left by immediate
@@ -89,6 +94,15 @@ ALU에서 연산을 수행하기 전, 필요에 따라 **barrel shifter**에서 
 | `ASR` | arithmetic shift right | (signed) x >> y | `#1-32` or `Rs` |
 | `ROR` | rotate right | ((unsigned) x >> y) \| (x << (32 - y))  | `#1-31` or `Rs` |
 | `RRX` | rotate right extend<br/>(carry bit 포함) | (C flag << 31) \| ((unsigned) x >> 1) | none |
+
+</td>
+<td> 
+
+![barrel shifter instructions](images/barrel_shifter_move.png)
+
+</td>
+</tr>
+</table>
 
 > arithmetic shift는 부호 비트를 유지(signed)하며, logical shift는 무조건 0으로 채운다.(unsigned)
 >
