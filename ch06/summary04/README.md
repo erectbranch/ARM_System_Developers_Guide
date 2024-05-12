@@ -253,7 +253,7 @@ loop마다 MSB $N$ bits를 대상으로, 각각 $2^N$ 개 entry를 갖는 두 �
  
   > `bitsleft` $\ge 0$ 일 때만, 다음 조회를 수행할 수 있다.
   
-  ![bitbuffer format 2](images/bitbuffer_format_2.png)
+  ![bitbuffer format 2](https://github.com/erectbranch/ARM_System_Developers_Guide/tree/master/ch06/summary04/images/bitbuffer_format_2.png)
 
 -  bitsleft가 0보다 작은 두 가지 case는, `empty_buffer_or_long_code` 함수를 호출하여 양쪽 다 처리할 수 있다.
 
