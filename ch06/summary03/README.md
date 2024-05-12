@@ -396,7 +396,7 @@ loop1                                ; 1 byte 단위 작성
 
   > 예를 들어, `S-1-k`는 'S-1 to 0'를 의미한다. 
 
-  ![multiple nested](https://github.com/erectbranch/ARM_System_Developers_Guide/tree/master/ch06/summary03/images/multiple_nested_loop.png)
+  ![multiple nested](https://github.com/erectbranch/ARM_System_Developers_Guide/blob/master/ch06/summary03/images/multiple_nested_loop.png)
 
 > `BPL`(Branch if PLus) : `N`=0 일 때 분기
 
