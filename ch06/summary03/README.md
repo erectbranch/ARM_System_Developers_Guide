@@ -279,7 +279,7 @@ C 라이브러리 함수 `memset`을 기반으로 구성한 코드를 최적화�
 | 최적화 문제 | | 임계치 |
 | --- | --- | --- |
 | 정렬 여부 | $N$ 이 충분히 클 경우에만 정렬할 가치가 있다. | 정렬 여부를 $T_1$ 으로 결정(최소 3 이상) |
-| load-store 명령어 | $N$ 의 크기에 따라, 가장 효율적인 명령이 다르다.<br/>(`STRB`(1 byte), `STR`(4 byte), `STMIA`(32 bytes) 등) | `STMIA`(x4 unrolling) 사용 여부를 $T_2$ 로 결정(최소 128 이상) |
+| load-store 명령어 | $N$ 의 크기에 따라, 가장 효율적인 명령이 다르다.<br/>(`STRB`(1 byte), `STR`(4 byte), `STMIA`(32 byte) 등) | `STMIA`(x4 unrolling) 사용 여부를 $T_2$ 로 결정(최소 128 이상) |
 
 다음 코드는 `memset` 함수를, $N$ 에 따라 세 가지 구간으로 나누어 구성한 `my_memset` 함수이다. ( $N =128N_h +4N_m +N_l$ )
 
@@ -295,7 +295,7 @@ C 라이브러리 함수 `memset`을 기반으로 구성한 코드를 최적화�
 >
 > - `BEQ`(Branch if Equal) : `Z`=1 일 때 분기
 
-```
+```assembly
 s   RN 0    ; current string pointer
 c   RN 1    ; the character to fill with
 N   RN 2    ; the number of bytes to fill
