@@ -72,6 +72,23 @@ Morgan Kaufmann · 2004년 04월 08일 출간</b>
    > Multiple-Register Transfer(LDM, STM), Addressimg Mode(IA, IB, DA, DB), Stack Operations(FA, FD, EA, ED)
 </details>
 
+<details open markdown="1">
+<summary><h3>🔨 Optimizing ARM Assembly Code</h3></summary>
+
+ - [Conditional Execution, Looping Constructs](https://github.com/erectbranch/ARM_System_Developers_Guide/tree/master/ch06/summary03)
+
+   > Conditional Execution(Unsigned Comparison, Signed Comparison Cascading Conditions)
+
+   > Looping Constructs(Loop Unrolling, Loop Counter Packing, Decrement Loop Counter, Negative Indexing, Log Indexing)
+
+ - [Bit Manipulation, Switch, Unaligned Data](https://github.com/erectbranch/ARM_System_Developers_Guide/tree/master/ch06/summary04)
+
+   > Bit Manipulation(Fixed-width Packing/Unpacking, Variable-width Packing/Unpacking), Efficient Switches(switch-absolute, switch-relative, Using Hash Function)
+
+   > Handling Unaligned Data
+</details>
+
+
 </br>
 
 ## :mag: 목차
