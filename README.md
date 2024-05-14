@@ -22,7 +22,7 @@ Morgan Kaufmann · 2004년 04월 08일 출간</b>
 
 ## 🚩 정리한 문서 목록
 
-<details open markdown="1">
+<details markdown="1">
 <summary><h3>📖 ARM Processor Fundamentals</h3></summary>
 
  - [ARM Embedded System](https://github.com/erectbranch/ARM_System_Developers_Guide/tree/master/ch01)
@@ -52,7 +52,7 @@ Morgan Kaufmann · 2004년 04월 08일 출간</b>
    > Core Extensions: Cache, Tightly Coupled Memory
 </details>
 
-<details open markdown="1">
+<details markdown="1">
 <summary><h3>🗂 ARM Instruction Set</h3></summary>
 
  - [Data Processing Instructions](https://github.com/erectbranch/ARM_System_Developers_Guide/tree/master/ch03/summary01)
@@ -63,16 +63,27 @@ Morgan Kaufmann · 2004년 04월 08일 출간</b>
 
    > Multiply Instructions(MLA, MUL), Long Multiply Instructions(SMLAL, SMULL, UMLAL, UMULL)
 
- - [Branch Instructions, Load-Store Instructions](https://github.com/erectbranch/ARM_System_Developers_Guide/tree/master/ch03/summary02)
+ - [Branch, Load-Store Instructions](https://github.com/erectbranch/ARM_System_Developers_Guide/tree/master/ch03/summary02)
 
    > Branch Instructions(B, BL, BX, BLX)
 
    > Single-Register Transfer(LDR, STR, LDRB, STRB, LDRH, STRH, LDRSB, LDRSH), Addressimg Mode(Preindex with writeback, Preindex, Postindex)
 
    > Multiple-Register Transfer(LDM, STM), Addressimg Mode(IA, IB, DA, DB), Stack Operations(FA, FD, EA, ED)
+  
+ - [SWI, Program Status Register  Instructions, ARMv5E Extensions](https://github.com/erectbranch/ARM_System_Developers_Guide/tree/master/ch03/summary02)
+
+   > Software Interrupt Instruction(SWI), Software Interrupt Handler
+
+   > Program Status Register Instructions(MRS, MSR), Coprocessor Instructions(CDP, MRC, MCR, LDC, STC)
+
+   > Loading Constants(LDR, ADR), Conditional Execution
+
+   > ARMv5E Extensions: Counting Leading Zeros(CLZ), Saturated Arithmetic(QADD, QDADD, QSUB, QDSUB), Signed Multiply Instructions
+(SMLAxy, SMLALxy, SMLAWy, SMULxy, SMULWy)
 </details>
 
-<details open markdown="1">
+<details markdown="1">
 <summary><h3>🔨 Optimizing ARM Assembly Code</h3></summary>
 
  - [Conditional Execution, Looping Constructs](https://github.com/erectbranch/ARM_System_Developers_Guide/tree/master/ch06/summary03)
