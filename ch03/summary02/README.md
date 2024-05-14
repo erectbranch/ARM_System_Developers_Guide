@@ -4,21 +4,19 @@
 
 ## 3.2 Branch Instructions
 
-**branch instruction**은 실행 흐름의 변경 혹은 루틴을 호출하면서 사용한다. 
+**branch instruction**은 실행 흐름의 변경 혹은 루틴을 호출하면서 사용한다.
 
 > 고급 언어의 서브루틴, if-then-else, loop에서 사용한다.
 
-branch instruction 사용 시, 다음 사항을 주의해야 한다.
+다음은 ARM 분기 명령어를 정리한 도표이다.
 
 - `label`: pc-relative address 계산을 위한 offset 
 
-  단, offset이 가질 수 있는 bit-width 한계로, $\pm$ 32MB 이내 값을 가져야 한다.
+  - 단, offset이 가질 수 있는 bit-width 한계로, $\pm$ 32MB 이내 값을 가져야 한다.
 
-- `pc`: 새로운 주소를 갖게 된다.
+- `T`: `cpsr` 레지스터의 Thumb state
 
-  단, 짝수를 갖는 주소 대상으로만 jump할 수 있다.
-
-다음은 ARM 분기 명령어를 정리한 도표이다.
+- `0xfffffffe`: 2의 배수를 유지하기 위한 Mask(1111 1110)
 
 > Syntax
 >
@@ -26,20 +24,18 @@ branch instruction 사용 시, 다음 사항을 주의해야 한다.
 >
 > - `BL{<cond>} label`
 >
-> - `BX{<cond>} Rm`
+> - `BX{<cond>} Rm` (`Rm` 레지스터 값의 주소로 분기)
 >
-> - `BLX{<cond>} label | Rm`
+> - `BLX{<cond>} label | Rm` (`Rm` 레지스터 값의 주소로 분기하되, `lr`에 다음 명령어 주소 기록)
 
-| | | |
-| --- | --- | --- |
-| `B` | unconditional | `pc=label` |
-| `BL` | branch and link(return address) | `pc=label`<br/>`lr=BL 이후 instruction 주소` |
-| `BX` | branch exchange | `pc=Rm&0xfffffffe`, `T=Rm&1` |
-| `BLX` | branch exchange with link | `pc=label`, `T=1`<br/>`pc=Rm&0xfffffffe`, `T=Rm&1`<br/>`lr=BLX 이후 instruction 주소` |
+| | | `pc` | `lr` | `cpsr` |
+| --- | --- | --- | --- | --- |
+| `B` | unconditional | `label` | | |
+| `BL` | branch and link(return address) | `label` | 분기 명령어 이후 명령어 주소 | |
+| `BX` | branch exchange | `Rm&0xfffffffe` |  | `T=Rm&1` |
+| `BLX` | branch exchange with link | `label`<br/>`Rm&0xfffffffe` | 분기 명령어 이후 명령어 주소 | `T=1`<br/>`T=Rm&1` | 
 
-> `&1`: 마지막에 1비트를 추가해야 thumb 모드에 진입할 수 있다.
-
-> (활용) `B`: goto, `BL`: 일반적인 함수 호출, `BX`: thumb 모드 진입(16비트), `BLX`: thumb 모드에서 함수 호출
+> (주된 활용 방식) `B`: goto, `BL`: 일반적인 함수 호출, `BX`: thumb 모드 진입(16비트), `BLX`: thumb 모드에서 함수 호출
 
 다음 코드는 두 방식(forward, backward)의 분기 명령어 예시다. 
 
@@ -93,15 +89,26 @@ backward                  ; infinite loop로 작동
 
 다음은 레지스터 `r1`이 포함하고 있는 주소(대상을 **base register**로 지칭)를 읽은 뒤, 메모리 주소 내 값을 `r0`에 불러오는 코드이다. (offset = 0)
 
+
+<table>
+<tr>
+<td> </td> <td>  </td> <td>  </td> 
+</tr>
+<tr>
+<td> 
+
+PRE
+
+</td> 
+<td colspan="2">  
+
 ```assembly
 PRE     r0 = 0x00000002
         r1 = 0x00000004
         mem32[0x00000004] = 0x56882280
 ```
 
-<table>
-<tr>
-<td> </td> <td>  </td> 
+</td> 
 </tr>
 <tr>
 <td> 
@@ -112,13 +119,13 @@ PRE     r0 = 0x00000002
 <td> 
 
 ```assembly
-        LDR    r0, [r1]     ; = LDR r0, [r1, #0]
+        LDR    r0, [r1]  ; = LDR r0, [r1, #0]
 POST    r0 = 0x56882280     
         r1 = 0x00000004     
 ```
 
 </td>
-<td rowspan="4">
+<td rowspan="3">
 
 ![LDR, LDRW, LDRB](images/LDR_LDRH_LDRB.png)
 
@@ -134,7 +141,7 @@ POST    r0 = 0x56882280
 
 ```assembly
         LDRH   r0, [r1]     
-POST    r0 = 0x00002280     ; zero extended [31:16]
+POST    r0 = 0x00002280  ; zero extended [31:16]
         r1 = 0x00000004
 ```
 
@@ -150,7 +157,7 @@ POST    r0 = 0x00002280     ; zero extended [31:16]
 
 ```assembly
         LDRB   r0, [r1]
-POST    r0 = 0x00000080     ; zero extended [31:8]
+POST    r0 = 0x00000080  ; zero extended [31:8]
         r1 = 0x00000004 
 ```
 
