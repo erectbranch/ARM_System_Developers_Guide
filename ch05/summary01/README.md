@@ -672,7 +672,7 @@ checksum_v8_loop
 
 **loop unrolling**이란, 한 iteration에서 loop body를 여러 번 수행하여 반복 횟수를 줄이는 기법이다.
 
-- 따라서, `SUBS    r1,r1,#1`, `BNE     checksum_v9_loop` 명령이 호출되는 총 횟수가 줄어든다.
+- 따라서, `SUBS r1,r1,#1`, `BNE checksum_v9_loop` 명령이 호출되는 총 횟수가 줄어든다.
 
 <table>
 <tr>

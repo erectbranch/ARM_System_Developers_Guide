@@ -71,7 +71,7 @@ Morgan Kaufmann · 2004년 04월 08일 출간</b>
 
    > Multiple-Register Transfer(LDM, STM), Addressimg Mode(IA, IB, DA, DB), Stack Operations(FA, FD, EA, ED)
   
- - [SWI, Program Status Register  Instructions, ARMv5E Extensions](https://github.com/erectbranch/ARM_System_Developers_Guide/tree/master/ch03/summary02)
+ - [SWI, Program Status Register  Instructions, ARMv5E Extensions](https://github.com/erectbranch/ARM_System_Developers_Guide/tree/master/ch03/summary03)
 
    > Software Interrupt Instruction(SWI), Software Interrupt Handler
 
@@ -81,6 +81,16 @@ Morgan Kaufmann · 2004년 04월 08일 출간</b>
 
    > ARMv5E Extensions: Counting Leading Zeros(CLZ), Saturated Arithmetic(QADD, QDADD, QSUB, QDSUB), Signed Multiply Instructions
 (SMLAxy, SMLALxy, SMLAWy, SMULxy, SMULWy)
+</details>
+
+<details markdown="1">
+<summary><h3>📈 Efficient C Programming</h3></summary>
+
+ - [C Compiler, Data Types, Looping Structures](https://github.com/erectbranch/ARM_System_Developers_Guide/tree/master/ch05/summary01)
+
+   > Efficient C Data Types(Local Variable, Function Argument, Division)
+
+   > Looping Constructs(Fixed Number of Iterations, Variable Number of Iterations, Loop Unrolling)
 </details>
 
 <details markdown="1">
