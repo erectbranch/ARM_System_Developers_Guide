@@ -109,6 +109,16 @@ Morgan Kaufmann · 2004년 04월 08일 출간</b>
    > Handling Unaligned Data
 </details>
 
+<details markdown="1">
+<summary><h3>⏰ Exception and Interrupt Handling</h3></summary>
+
+ - [Exception Handling](https://github.com/erectbranch/ARM_System_Developers_Guide/tree/master/ch09/summary01)
+
+   > Exception, ARM Processor Modes(FIQ, IRQ, SVC, Abort, Undefined), Vector Table
+
+   > Exception Priority, Link Register Offsets
+</details>
+
 
 </br>
 
@@ -200,7 +210,7 @@ Morgan Kaufmann · 2004년 04월 08일 출간</b>
     8.4 IIR Filters	
     8.5 The Discrete Fourier Transform	
 	
-### 9. Exception and Interruput Handling	
+### 9. Exception and Interrupt Handling	
 
     9.1 Exception Handling	
     9.2 Interrupts	
