@@ -27,6 +27,10 @@
 
 ## 3.1 Data Processing Instructions
 
+다음은 ARM의 32-bit data processing instruction 형식이다.
+
+![data processing instruction](images/data_processing.png)
+
 데이터 처리 명령어에 `s` suffix 접미어를 붙여서, cpsr 플래그를 갱신할 수 있다. 
 
 > move, logical instruction에 붙이면, `N`, `Z`, `C` flag를 갱신한다.
@@ -43,7 +47,7 @@
 
 ### 3.1.1 Move Instructions
 
-**move instruction**은 `N`(소스 레지스터 `Rm` 혹은 immediate `#`)을, 목적 레지스터 `Rd`로 복사한다.
+**move instruction**은 `N`(소스 레지스터 `Rm` 혹은 immediate `#`)을, destination 레지스터 `Rd`로 복사한다.
 
 > Syntax: `<instruction>{<cond>}{S} Rd, N`
 
@@ -63,6 +67,10 @@ PRE    r5 = 5
 POST   r5 = 5
        r7 = 5
 ```
+
+참고로 `src2`가 immediate에 해당될 경우, ARM은 8-bit immediate와 **4-bit rotate** 값을 활용한 트릭으로 보다 넓은 범위의 immediate를 지원한다.
+
+![mov immediate encoding](images/MOV_immediate_12bit.png)
 
 ---
 
