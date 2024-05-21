@@ -236,10 +236,10 @@ write_next_code
 
 loop마다 MSB $N$ bits를 대상으로, 각각 $2^N$ 개 entry를 갖는 두 개의 LUT(codebits, code) 조회를 수행한다. 단, 두 가지 예외 상황에서는 `empty_buffer_or_long_code`를 호출하여 처리한다.
 
-| 예외 상황 | table return | example code label |
+| | table return | example code label |
 | --- | --- | --- |
-| N bit: code를 결정하기에 충분 | 코드 길이, 코드 값. | `bitstream_read_code` |
-| N bit: code를 결정하기에 불충분 | 0xFF escape | `long_code` |
+| N bit: code를 결정하기에 충분 | 코드 길이, 코드 값. | 버퍼 내 남은 $N$ 충분: `bitstream_read_code`<br/> 버퍼 내 비트 부족(예외): `empty_buffer_or_long_code` |
+| N bit: code를 결정하기에 불충분(예외) | 0xFF escape | `long_code` |
 
 > 0xFF escape: 해당 케이스가 예외적인 경우임을 나타내는 단순한 플래그 값
 
