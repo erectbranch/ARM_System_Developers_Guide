@@ -91,6 +91,12 @@ Morgan Kaufmann · 2004년 04월 08일 출간</b>
    > Efficient C Data Types(Local Variable, Function Argument, Division)
 
    > Looping Constructs(Fixed Number of Iterations, Variable Number of Iterations, Loop Unrolling)
+  
+ - [Register Allocation, Function Calls, Alaising](https://github.com/erectbranch/ARM_System_Developers_Guide/tree/master/ch05/summary02)
+
+   > Spilled Variable, Argument Registers, General Variable Registers
+
+   > Optimizing Function Calls, Pointer Aliasing
 </details>
 
 <details markdown="1">
