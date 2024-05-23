@@ -417,7 +417,7 @@ read_next_code
 </td>
 <td> 
 
-- (+) position independent에서 사용 가능하다.
+- (+) position independent에서 사용할 수 있다.
 
 - (-) 분기 명령어 사용으로 인해 `switch_absolute`보다 느리다.
 
