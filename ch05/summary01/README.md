@@ -552,7 +552,7 @@ checksum_v6_loop
 </tr>
 </table>
 
-단, 다운 카운터를 사용한 구현은 `i`의 데이터 타입에 주의해야 한다. 
+단, 다운 카운터 방식의 구현은 `i`의 데이터 타입에 주의해야 한다. 
 
 - `(signed) int i`: `i!=0` 대신 `i>0`을 사용하면, underflow 문제로 종료가 불가능하다.(0x80000000)
 
@@ -725,11 +725,11 @@ checksum_v8_loop
 </tr>
 </table>
 
-단, loop unrolling은 적절한 프로파일링을 병행했을 때 최고의 효율을 갖는다.
+단, loop unrolling은 적절한 프로파일링을 병행했을 때 최고의 효율을 갖는다. 다음은 loop unrolling 사용 시 주의사항이다.
 
-- unrolling size가 너무 클 경우, 성능 저하가 발생할 수 있다.
+- unrolling size가 너무 클 경우, 성능 저하가 발생할 가능성이 높다.
 
-  cache를 벗어나는 크기로 설정 시, cache spill을 발생시킨다. (cache miss로 인해 memory access 증가)
+  > cache 크기를 벗어나면서 cache spill 문제가 발생한다. (cache miss로 인해 memory access 증가)
 
 - 루프 문의 코드 크기가 늘어나는 overhead에 주의해야 한다.
 
