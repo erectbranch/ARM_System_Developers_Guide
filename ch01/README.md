@@ -4,14 +4,14 @@
 
 > [RISC-V 정리 문서(Computer Organization and Design RISC-V Edition)](https://github.com/erectbranch/Computer_Organization_and_Design)
 
-아래는, 대표적인 아키텍처 설계 철학인 **RISC**와 **CISC**를 비교한 도표다.
+아키텍처에서 사용하는 instruction set은, 대표적으로 **RISC**와 **CISC**의 두 가지 design philosophy로 구분된다.
 
 || CISC<br/>(Complex Instruction Set Computer) | RISC<br/>(Reduced Instruction Set Computer) |
-| :---: | :---: | :---: |
+| --- | --- | --- |
 || ![CISC](images/RISC_vs_CISC_1.png) | ![RISC](images/RISC_vs_CISC_2.png) |
-| complexity | 명령어 복잡<br/>HW에 의존 | 명령어 단순<br/>SW인 컴파일러에 의존 |
+| complexity | 명령어 복잡<br/>HW에 의존 | 명령어 단순<br/>컴파일러(SW)에 의존 |
 | \#instructions | 많음 | 적음 |
-| 명령어 크기 | 가변 | 고정 |
+| instruction size | 가변적 | 고정 |
 | \#registers | 적음 | 많음 |
 
 ---
@@ -21,39 +21,27 @@
 ARM은 **RISC** 구조를 갖는다. RISC는 1 clock 내 실행되는 단순하고 빠른 명령어가 주된 특징이다. RISC는 다음 4가지 대표적인 설계 원칙을 기본으로 한다.
 
 | 설계 원칙 | 특징 | CISC와 비교 |
-| :---: | --- | --- |
-| **instructions** | - 고정 크기(bits)로 구성<br/> - 1 cycle 내 수행되는 단순한 연산 위주 설계<br/> $\ $ (나눗셈 등 복잡한 연산은, 단순한 연산을 조합해서 구현) | CISC는 가변 크기 명령어를 갖고, 여러 사이클에 걸쳐 실행<br/>(또한, microcode 단위로 세분화될 수 있다.)
-| **pipelines** | - 명령어를 병렬적으로 실행<br/> - 1 cycle에 한 단계씩 진행 | microcode 등 미니프로그램 단위로 실행 |
-| **registers** | - 다수의 범용 레지스터 소유<br/>- 데이터 혹은 메모리 주소를 담는다. | CISC는 목적에 따라 레지스터를 설계<br/>(e.g., AX(Accumulator), BX(Base address), CX(Count), DX(Data), ...) |
-| **load-store architecture** | - operand는 반드시 레지스터에 적재되어야 한다.<br/>- load/store 명령을 통해 레지스터 뱅크와 메모리 사이 데이터를 전송 | CISC는 메모리에 위치하는 operand를 허용한다. |
+| --- | --- | --- |
+| **instructions** | - 고정 크기(bits)로 구성<br/> - 1 cycle 내 수행되는 단순한 연산 위주 설계<br/> (나눗셈 등 복잡한 연산은, 단순한 연산을 조합해서 구현) | CISC는 가변 크기 명령어를 갖고, 여러 사이클에 걸쳐 실행<br/>(또한, **microcode**라는 보다 작은 단위로 세분화된다.)
+| **pipelines** | - 명령어를 병렬적으로 실행<br/> - 1 cycle에 한 단계씩 진행 | microcode 등 miniprogram 단위로 실행 |
+| **registers** | - 다수의 범용 레지스터로 구성<br/>- 데이터 혹은 메모리 주소를 포함 | 반면, CISC는 목적에 따라서 레지스터를 소유<br/>(e.g., `AX`(Accumulator), `BX`(Base address), `CX`(Count), `DX`(Data), ...) |
+| **load-store architecture** | - 피연산자(operand)는 반드시 레지스터에 적재되어 있어야 한다.<br/>- 레지스터 뱅크와 메모리 사이 데이터는, `load`/`store` 명령을 통해 전송 | CISC는 operand가 메모리에 있어도 무방하다. |
 
 ---
 
 ## 1.2 ARM Design Philosophy
 
-ARM은 RISC 설계 원칙을 기반으로 하며, 다음과 같은 특징을 갖는다.
+ARM 아키텍처는 RISC의 설계 원칙을 따르며, 다음과 같은 특징을 갖는다.
 
-| 장점 |
-| --- |
-| - 경량 설계<br/>- 높은 code density<br/>- 작은 면적<br/>- 하드웨어 디버깅 기술 내장 |
+| 특징 | 설명 |
+| --- | --- |
+| **variable cycle execution for certain instructions** | 실행 사이클이 가변적인 일부 명령어를 제공<br/>(e.g., load-store-multiple) |
+| **inline barrel shifter** | 명령어를 보다 복잡하게 수행 가능 |
+| **Thumb mode** | 16-bit 명령어 집합을 제공한다.<br/>(code density 면에서 32-bit 대비 30% 이상 유리) |
+| **conditional execution** | 고비용의 branch instruction 대신 사용하여 최적화 가능 |
+| **DSP(Digital Signal Processor)** 확장 명령 | 신속한 16x16 multiplier/saturation를 제공 |
 
-> 내장된 ICE(In-Circuit Emulator)를 사용하여, 디버깅 시 trap(interrupt) 통한 분석 가능
-
-ARM 명령어 집합은 다음과 같은 특징을 갖는다.
-
-- (1) 일부 명령은 가변적인 사이클 실행을 갖는다.
-
-  > 예를 들어, load-store-multiple 명령은, 레지스터 수에 따라 실행 사이클이 달라진다.
-
-- (2) **inline barrel shifter**를 통해 복잡한 명령어를 생성할 수 있다.
-
-- (3) **Thumb mode**라는 16비트 명령어 집합을 제공하고, 이를 통해 코드 밀도를 개선한다.
-
-- (4) **conditional execution**을 통해, branch instruction을 줄일 수 있다.
-
-- (5) 16x16 multiplier/saturation를 제공하는, **DSP**(Digital Signal Processor) 확장 명령을 지원한다.
-
-  > saturation: overflow 발생 시 최대값 혹은 최소값으로 제한
+> 참고로, ARM 디버깅은, 내장된 ICE(In-Circuit Emulator)를 사용하여 trap(interrupt)을 발생시킨다.
 
 ---
 
@@ -65,42 +53,40 @@ ARM 명령어 집합은 다음과 같은 특징을 갖는다.
 
 | 구성 요소 | 설명 |
 | --- | --- |
-| **ARM processor** | 명령어 실행 엔진인 core,<br/>bus와 직접 인터페이스하는 컴포넌트로 구성(e.g., cache, MMU) |
-| **controller** | e.g., interrupt controller, memory controller | 
-| **peripherals** | 칩 외부의 모든 입출력 기능을 담당 |
-| **bus** | 서로 다른 컴포넌트 사이에서 통신을 위해 사용 |
+| **ARM processor** | 명령어 실행 엔진인 core<br/>bus를 통해 직접 인터페이스하는 컴포넌트와 함께 구성(e.g., cache, MMU) |
+| **controller** | 중요한 시스템 기능을 제어(e.g., interrupt controller, memory controller) | 
+| **peripherals** | 칩 외부와의 입출력을 제공 |
+| **bus** | 서로 다른 컴포넌트 간 통신에서 사용 |
 
-> MMU(Memory Management Unit): 가상 주소를 물리 주소로 변환
+> MMU(Memory Management Unit): 가상 주소를 물리 주소로 변환하는 장치
 
 ---
 
 ### 1.3.1 ARM Bus Technology
 
-임베디드 시스템에서는 x86 PC용 설계(e.g., PCI)와 달리, internal on-chip bus를 기반으로 주변장치와 연결된다.
+ARM 임베디드 시스템에서는 internal on-chip bus를 통해 주변장치(peripherals)와 연결된다. (이때 core와 주변장치는 마스터-슬레이브 관계로 bus와 연결된다.)
 
-> PCI(Peripheral Component Interconnect): external 혹은 off-chip 기술에 해당되며,, PC 마더보드 내장
-
-이때, ARM processor core와 나머지 주변장치는 마스터-슬레이브 관계로 bus에 연결된다.
+> 반면 x86 PC의 경우, external off-chip bus인 PCI(Peripheral Component Interconnect) bus를 주로 사용한다.
 
 | 종류 | 설명 |
 | --- | --- |
 | bus master(ARM core) | 데이터 전송을 개시할 수 있다. |
 | bus slave | master에 데이터 전송에 응답할 수 있다.(응답만 가능) |
 
-bus는 2단계 아키텍처 레벨이 있고, 각 레벨은 다음과 같은 역할을 수행한다
-
-| level | 설명 |
-| --- | --- |
-| 물리 단계(physical level) | 전기 특성 및 버스 폭(width: 16, 32, 64 bits)를 다룬다. |
-| 프로토콜 단계(protocol level) | 통신 규칙(protocol)을 다룬다. |
+> 참고로 bus는 2단계 아키텍처 레벨을 가지며, 각 레벨은 다음과 같이 역할이 구분된다.
+> 
+> | level | 설명 |
+> | --- | --- |
+> | 물리 단계(physical level) | electrical characteristics 및 bus width(16, 32, 64 bits) |
+> | 프로토콜 단계(protocol level) | 프로세서와 주변장치 사이의 통신 규칙(protocol) |
 
 ---
 
 ### 1.3.2 AMBA Bus Protocol 
 
-대표적으로 1996년 ARM에서 도입한 **AMBA**(Advanced Microcontroller Bus Architecture)은, 각기 다른 프로세서 아키텍처에서도 주변장치 설계를 재사용할 수 있도록 한 standard bus protocol이다.
+1996년 ARM에서 도입한 **AMBA**(Advanced Microcontroller Bus Architecture)은, 각기 다른 프로세서 아키텍처에서도 주변장치 설계를 재사용할 수 있도록 한 standard bus protocol이다.
 
-AMBA는 다음 세 가지 버스 설계로 구성된다.
+AMBA는 세 가지 버스 설계로 구성된다.
 
 - **AHB**(ARM High-performance Bus): 고성능 주변장치용 버스
 
@@ -110,14 +96,14 @@ AMBA는 다음 세 가지 버스 설계로 구성된다.
 
 - **ASB**(ARM System Bus)
 
-또한, AHB는 두 가지 변형이 존재한다. 서로 protocol은 같으나 interconnect가 다르다.
-
-> interconnect: bus, ring, mesh 등 연결 형태
-
-| bus 기법 | 설명 | 기타 |
-| --- | --- | --- |
-| Multi-layer AHB | 다중 버스 마스터 허용 | multi-processor에 적합 |
-| AHB-List | 단일 버스 마스터 제한 | AHB의 subset에 해당 |
+> 참고로, AHB는 두 가지 변형이 존재한다. 서로 protocol은 같으나 interconnect가 다르다.
+>
+> - interconnect: bus, ring, mesh 등 연결 형태
+> 
+> | bus 기법 | 설명 | 기타 |
+> | --- | --- | --- |
+> | Multi-layer AHB | 다중 버스 마스터 허용 | multi-processor에 적합 |
+> | AHB-List | 단일 버스 마스터 제한 | AHB의 subset에 해당 |
 
 ---
 
@@ -149,13 +135,11 @@ AMBA는 다음 세 가지 버스 설계로 구성된다.
 
 #### 1.3.3.1 Memory Width
 
-width란 메모리 접근 뒤 반환되는 bit width로, 일반적으로 8, 16, 32, 64 bits를 갖는다. 성능/비용 비율에 직접적인 영향을 미치는 요소에 해당된다.
+bit width는 성능 및 비용에 직접적인 영향을 미치는 요소로, 일반적으로 8, 16, 32, 64 bits를 사용한다. 
 
-문제는, 예를 들어 32bit ARM instruction과, (저렴한) 16-bit-wide 메모리 칩을 사용하는 경우 발생한다.
+> ARM 프로세서에서는 16 bit **Thumb** 명령어를 제공하며, 이를 16-bit-wide 메모리와 조합할 수 있다. 
 
-- 1개 명령어: 2번 memory fetch 필요
-
-ARM 프로세서에서는 16 bit **Thumb** 명령어를 제공하며, 이를 16-bit-wide 메모리와 사용하여 더 나은 성능을 획득할 수 있다. 다음은 ARM 32-bit와 Thumb 16-bit 명령어의 fetch 사이클을, 다양한 bit-wide 메모리에서 비교한 도표다.
+다음은 ARM 32-bit와 Thumb 16-bit 명령어의 fetch 사이클을, 다양한 bit-wide 메모리에서 비교한 도표다.
 
 | instruction size | 8-bit memory | 16-bit memory | 32-bit memory |
 | --- | --- | --- | --- |
@@ -217,8 +201,8 @@ ARM 프로세서에서는 16 bit **Thumb** 명령어를 제공하며, 이를 16-
 | 주요 기능 | 설명 |
 | --- | --- |
 | 초기 HW 설정(**configuration**) | - memory remapping 수행<br/>- 주로 booted image의 요구사항에 맞추는 작업 수행 |
-| 진단(**diagonstics**) | - HW 상태를 확인하고, 문제가 있는 경우 알림 전달<br/> $\ $ (e.g., memory test, I/O test) |
-| 부팅(**booting**) | - image를 load하고 PC를 image의 시작 주소로 수정하여 제어권 전달<br/> $\ $ (image loading에는 코드 및 데이터를 포함한다.) |
+| 진단(**diagonstics**) | HW 상태를 확인하고, 문제가 있는 경우 알림 전달<br/>  (e.g., memory test, I/O test) |
+| 부팅(**booting**) | image를 load하고, PC를 image의 시작 주소로 수정하여 제어권 전달<br/> (image loading에는 코드 및 데이터를 포함한다.) |
 
 - 초기 HW 설정(memory map 재구성 등)
 
@@ -234,7 +218,7 @@ ARM 프로세서에서는 16 bit **Thumb** 명령어를 제공하며, 이를 16-
 
 ### 1.4.2 Operating System
 
-Operatiny System(OS, 운영체제)는 크게 RTOS(Real-Time OS)과 platform OS(general-purpose OS)로 분류된다.
+Operating System(**OS**, 운영체제)는 크게 RTOS(Real-Time OS)과 platform OS(general-purpose OS)의 두 종류로 분류한다.
 
 | 종류 | 설명 | 특징 |
 | --- | --- | --- | 

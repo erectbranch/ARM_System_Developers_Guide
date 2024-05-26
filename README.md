@@ -22,6 +22,8 @@ Morgan Kaufmann · 2004년 04월 08일 출간</b>
 
 ## 🚩 정리한 문서 목록
 
+> ▶(folded), ▼(unfolded)
+
 <details markdown="1">
 <summary><h3>📖 ARM Processor Fundamentals</h3></summary>
 
