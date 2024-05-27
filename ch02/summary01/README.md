@@ -8,7 +8,9 @@
 
 > sign extend: 8bit, 16bit 정수를 32bit로 부호 확장
 
-- 레지스터 파일(register file)은 32-bit 레지스터로 구성된다.
+> ALU(Arithmetic Logic Unit), MAC(Multiplier-Accumulator) unit
+
+- 레지스터 파일(register file) 내부는 32-bit 레지스터로 구성된다.
 
 - 데이터 처리 명령은 결과를 Rd에, load/store 명령은 결과를 address register에 저장한다.
 
@@ -22,7 +24,7 @@
 
 > notation: 'r' + 'register_number'
 
-- 16개 data register, 2개 process status register로 구성
+- 16개 data register, 2개 process status register(`cpsr`, `spsr`)로 구성
 
 - `r13`, `r14`, `r15`
 
@@ -66,13 +68,13 @@
 
 | 모드 | 설명 | 약자 | privilged | Mode[4:0] |
 | --- | --- | :---: | :---: | :---: |
-| Abort | 메모리 접근 실패 | abt | O | 10111 |
-| Fast interrupt request | 인터럽트 수준에 따라 진입 | fiq | O | 10001 |
-| Interrupt request | 인터럽트 수준에 따라 진입 | irq | O | 10010 |
-| Supervisor | 리셋 시 진입, OS 커널 동작 모드 | svc | O | 10011 |
-| System | cpsr 완전 쓰기 가능한 특별한 user 모드 | sys | O | 11111 |
-| Undefined | 정의되지 않은 명령어 | und | O | 11011 |
-| User | 사용자 모드 | usr | X | 10000 |
+| **Abort** | 메모리 접근 실패 | `abt` | O | 10111 |
+| **Fast interrupt request** | 인터럽트 수준에 따라 진입 | `fiq` | O | 10001 |
+| **Interrupt request** | 인터럽트 수준에 따라 진입 | `irq` | O | 10010 |
+| **Supervisor** | 리셋 시 진입, OS 커널 동작 모드 | `svc` | O | 10011 |
+| **System** | cpsr 완전 쓰기 가능한 특별한 user 모드 | `sys` | O | 11111 |
+| **Undefined** | 정의되지 않은 명령어 | `und` | O | 11011 |
+| **User** | 사용자 모드 | `usr` | X | 10000 |
 
 ---
 
@@ -123,7 +125,7 @@ ARM 코어는 ARM(32 bit), Thumb(16 bit), Jazelle(8 bit) 3가지 상태 및 명�
 | | ARM | Thumb | Jazelle |
 | --- | :---: | :---: | :---: |
 | Instruction size | 32 bits | 16 bits | 8 bits<br/>(bytecode) |
-| Control | cpsr T = 0, J = 0 | cpsr T = 1 | cpsr T = 0, J = 1 | 
+| Control | cpsr `T = 0`, `J = 0` | cpsr `T = 1` | cpsr `T = 0`, `J = 1` | 
 
 임베디드 시스템에서, JAVA를 사용할 수 있는 이유에 해당되며, JVM(Java Virtual Machine)은 여전히 필요하지만 빠르게 수행이 가능하다.
 
@@ -143,11 +145,11 @@ ARM 코어는 ARM(32 bit), Thumb(16 bit), Jazelle(8 bit) 3가지 상태 및 명�
 
 | 플래그 | 이름 | 설정 조건 |
 | --- | --- | --- |
-| N | Negative | 결과가 음수일 때 |
-| Z | Zero | 결과가 0일 때 |
-| C | Carry | unsigned overflow 발생 시 |
-| V | oVerflow | signed overflow 발생 시 |
-| Q | Saturation | overflow 혹은 saturation 발생 시 |
+| `N` | Negative | 결과가 음수일 때 |
+| `Z` | Zero | 결과가 0일 때 |
+| `C` | Carry | unsigned overflow 발생 시 |
+| `V` | oVerflow | signed overflow 발생 시 |
+| `Q` | Saturation | overflow 혹은 saturation 발생 시 |
 
 다음은 cpsr 플래그 예시이다.
 
@@ -169,21 +171,21 @@ ARM 코어는 ARM(32 bit), Thumb(16 bit), Jazelle(8 bit) 3가지 상태 및 명�
 
 | Mnemonic | Name | Condition flag |
 | --- | --- | --- |
-| EQ | equal | Z |
-| NE | not equal | z |
-| CS HS | carry set/unsigned higher or same | C |
-| CC LO | carry clear/unsigned lower | C |
-| MI | minus/negative | N |
-| PL | plus/positive or zero | n |
-| VS | overflow | V |
-| VC | no overflow | v |
-| HI | unsigned higher | zC |
-| LS | unsigned lower or same | Z or c |
-| GE | signed greater or equal | NV or nv |
-| LT | signed less than | Nv or nV |
-| GT | signed greater than | NzV or nzv |
-| LE | signed less than or equal | Z or Nv or nV |
-| AL | always(unconditional) | ignored |
+| `EQ` | equal | Z |
+| `NE` | not equal | z |
+| `CS` `HS` | carry set/unsigned higher or same | C |
+| `CC` `LO` | carry clear/unsigned lower | C |
+| `MI` | minus/negative | N |
+| `PL` | plus/positive or zero | n |
+| `VS` | overflow | V |
+| `VC` | no overflow | v |
+| `HI` | unsigned higher | zC |
+| `LS` | unsigned lower or same | Z or c |
+| `GE` | signed greater or equal | NV or nv |
+| `LT` | signed less than | Nv or nV |
+| `GT` | signed greater than | NzV or nzv |
+| `LE` | signed less than or equal | Z or Nv or nV |
+| `AL` | always(unconditional) | ignored |
 
 > 참고로, sticky한 특성을 갖는다.(한번 켜지면, 별도로 끄지 않는 이상 flag를 유지한다.)
 
