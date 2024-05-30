@@ -98,3 +98,55 @@ ARM core의 옆에 위치하여 성능을 향상시키거나 다양한 기능을
 > ![hybrid](images/hybrid_architecture.jpg)
 
 ---
+
+### 2.5.2 Memory Management Hardware
+
+임베디드 시스템은 메모리 장치를 여러 개 가지는 경우가 많으므로, 부적절한 메모리 접근을 막는 장치가 필요하다. 다음은 ARM에서 메모리 보호를 위해 사용되는 세 가지 유형의 하드웨어를 나타낸다.
+
+| **Type** | **Protection** | **Features** |
+| --- | --- | --- |
+| Non-protected memory | 보호를 제공하지 않음 | fixed, very little flexibility<br><U>작고 단순한 임베디드 시스템</U>에서 사용 |
+| **MPU**(Memory Protection Unit) | simple한 보호 제공 | **coprocessor register set**으로 제어<br>비교적 <U>단순한 memory map을 갖는 시스템</U>에서 사용 |
+| **MMU**(Memory Management Unit) | comprehensive한 보호 제공 | **virtual address**를 활용한다.<br><U>멀티테스킹을 지원하는 정교한 플랫폼</U>에서 사용 |
+
+---
+
+### 2.5.3 Coprocessor
+
+ARM 프로세서와 연결되어, 명령어 집합의 확장 기능 혹은 configuration register set 역할을 수행한다. (전용 ARM 명령어를 사용)
+
+- e.g., coprocessor 15(`CP15`): cache, TCM를 제어하고 memory management를 수행한다.
+
+  <blockquote>
+
+  4, 11-12: UNUSED 
+
+  | CP15<br>Register | Read | Write |
+  | --- | --- | --- |
+  | 0 | ID code | Unpredictable |
+  | 0 | Cache type | Unpredictable |
+  | 1 | Control | Control |
+  | 2 | Translation table base | Translation table base |
+  | 3 | Domain access control | Domain access control |
+  | 4 | Unpredictable | Unpredictable |
+  | 5 | Fault status | Fault status |
+  | 6 | Fault address | Fault address |
+  | 7 | Unpredictable | Cache operations |
+  | 8 | Unpredictable | TLB operations |
+  | 9 | Cache lockdown | Cache lockdown |
+  | 10 | TLB lockdown | TLB lockdown |
+  | 11 | Unpredictable | Unpredictable |
+  | 12 | Unpredictable | Unpredictable |
+  | 13 | FCSE PID | FCSE PID |
+  | 14 | Unpredictable | Unpredictable |
+  | 15 | Test configuration | Test configuration |
+
+  </blockquote>
+
+- 명령어에서 `register 0`은 `opcode_2` field에 따라 읽는 레지스터가 달라진다.
+  
+  - `MRC p15,0,Rd,c0,c0,0`: ID code register를 읽는다.
+  
+  - `MRC p15,0,Rd,c0,c0,1`: Cache type register를 읽는다.
+
+---
