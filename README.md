@@ -51,7 +51,7 @@ Morgan Kaufmann · 2004년 04월 08일 출간</b>
 
    > Exceptions, Interrupts, Vector Table
 
-   > Core Extensions: Cache, Tightly Coupled Memory
+   > Core Extensions: Cache, Tightly Coupled Memory, Memory Management Hardware(MPU, MMU), Coprocessor
 </details>
 
 <details markdown="1">

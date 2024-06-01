@@ -135,7 +135,13 @@ ARM 코어는 ARM(32 bit), Thumb(16 bit), Jazelle(8 bit) 3가지 상태 및 명�
 
 ### 2.2.5 Interrupt Masks
 
-인터럽트 마스크는, I(interrupt request, IRQ), F(fast interrupt request, FIQ) bit가 1이면, 해당 인터럽트의 발생을 중단시킨다.
+> ARM에서는 **IRQ**(Interrupt Request), **FIQ**(Fast Interrupt Request) 2가지 인터럽트를 지원한다.
+
+인터럽트 마스크(interrupt mask)는 특정한 인터럽트의 발생을 중단시키기 위해 사용된다. 
+
+- cpsr의 7번째 bit(`I`), 6번째 bit(`F`)에 관여한다.
+
+- 해당 bit의 값이 1이면 인터럽트 발생을 중단시킨다.
 
 ----
 
