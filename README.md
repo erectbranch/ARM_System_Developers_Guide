@@ -94,11 +94,7 @@ Morgan Kaufmann · 2004년 04월 08일 출간</b>
 
    > Looping Constructs(Fixed Number of Iterations, Variable Number of Iterations, Loop Unrolling)
   
-<<<<<<< HEAD
  - [Register Allocation, Function Calls, Aliasing](https://github.com/erectbranch/ARM_System_Developers_Guide/tree/master/ch05/summary02)
-=======
- - [Register Allocation, Function Calls, Alaising](https://github.com/erectbranch/ARM_System_Developers_Guide/tree/master/ch05/summary02)
->>>>>>> b0a67e111cd715edd517b4b6cb24744e4920e45e
 
    > Spilled Variable, Argument Registers, General Variable Registers
 
