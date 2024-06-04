@@ -99,6 +99,14 @@ Morgan Kaufmann · 2004년 04월 08일 출간</b>
    > Spilled Variable, Argument Registers, General Variable Registers
 
    > Optimizing Function Calls, Pointer Aliasing
+
+ - [Alignment, Endian, Division, Inline Assembly](https://github.com/erectbranch/ARM_System_Developers_Guide/tree/master/ch05/summary03)
+
+   > Structure Alignment(Reordering, Padding), Endianness(Big-endian, Little-endian)
+
+   > Division(cycles, avoiding division)
+
+   > Inline Functions, Inline Assembly
 </details>
 
 <details markdown="1">
