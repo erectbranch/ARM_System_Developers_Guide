@@ -47,11 +47,19 @@
 
 ![program status register](images/program_status_register.png)
 
-- 4가지 필드로 구성된다.
+총 4가지 필드(**Flags**, **Status**, **Extension**, **Control**)로 구성되며, 각 bit의 의미는 다음과 같다.
 
-  **Flags**, **Status**, **Extension**, **Control**
-
-> 일부 ARM 코어는 추가적인 bit를 갖는다. (e.g., J(Jazelle) flag bit)
+| Parts | Bits | Architectures | Description |
+| --- | --- | --- | --- |
+| `Mode` | 4:0 | all | processor mode |
+| `T` | 5 | ARMv4T | Thumb state |
+| `I`, `F` | 7:6 | all | interrupt mask |
+| `J` | 24 | ARMv5TEJ | Jazelle state |
+| `Q` | 27 | ARMv5TE | condition flag(saturation) |
+| `V` | 28 | all | condition flag(overflow) |
+| `C` | 29 | all | condition flag(carry) |
+| `Z` | 30 | all | condition flag(zero) |
+| `N` | 31 | all | condition flag(negative) |
 
 ---
 
@@ -171,28 +179,28 @@ ARM 코어는 ARM(32 bit), Thumb(16 bit), Jazelle(8 bit) 3가지 상태 및 명�
 
 **conditional execution**(조건부 실행)은, 명령의 condition attribute와 cpsr의 조건 플래그를 비교하고, 일치할 경우 명령을 수행한다.
 
-> on: 대문자, off: 소문자
+- `adds`처럼 명령어 뒤에 `s`(suffix)를 붙이면 flag가 업데이트된다.
 
-> `adds`처럼 명령어 뒤에 `s`(suffix)를 붙이면 flag를 업데이트한다.
+- flag는 한번 켜지면 다시 끄지 않는 이상 상태를 유지한다. (sticky)
+
+> on: 대문자, off: 소문자
 
 | Mnemonic | Name | Condition flag |
 | --- | --- | --- |
-| `EQ` | equal | Z |
-| `NE` | not equal | z |
-| `CS` `HS` | carry set/unsigned higher or same | C |
-| `CC` `LO` | carry clear/unsigned lower | C |
-| `MI` | minus/negative | N |
-| `PL` | plus/positive or zero | n |
-| `VS` | overflow | V |
-| `VC` | no overflow | v |
-| `HI` | unsigned higher | zC |
-| `LS` | unsigned lower or same | Z or c |
-| `GE` | signed greater or equal | NV or nv |
-| `LT` | signed less than | Nv or nV |
-| `GT` | signed greater than | NzV or nzv |
-| `LE` | signed less than or equal | Z or Nv or nV |
+| `EQ` | equal | `Z` |
+| `NE` | not equal | `z` |
+| `CS` `HS` | carry set/unsigned higher or same | `C` |
+| `CC` `LO` | carry clear/unsigned lower | `C` |
+| `MI` | minus/negative | `N` |
+| `PL` | plus/positive or zero | `n` |
+| `VS` | overflow | `V` |
+| `VC` | no overflow | `v` |
+| `HI` | unsigned higher | `zC` |
+| `LS` | unsigned lower or same | `Z` or `c` |
+| `GE` | signed greater or equal | `NV` or `nv` |
+| `LT` | signed less than | `Nv` or `nV` |
+| `GT` | signed greater than | `NzV` or `nzv` |
+| `LE` | signed less than or equal | `Z` or `Nv` or `nV` |
 | `AL` | always(unconditional) | ignored |
-
-> 참고로, sticky한 특성을 갖는다.(한번 켜지면, 별도로 끄지 않는 이상 flag를 유지한다.)
 
 ---
