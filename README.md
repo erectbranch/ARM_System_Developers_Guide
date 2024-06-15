@@ -112,6 +112,12 @@ Morgan Kaufmann · 2004년 04월 08일 출간</b>
 <details markdown="1">
 <summary><h3>🔨 Optimizing ARM Assembly Code</h3></summary>
 
+ - [Assembly Function, Instruction Scheduling](https://github.com/erectbranch/ARM_System_Developers_Guide/tree/master/ch06/summary01)
+
+   > Assembly Function, Call Subroutine
+
+   > Instruction Scheduling(instruction cycles, ARM9TDMI pipeline), Pipeline Hazards
+
  - [Conditional Execution, Looping Constructs](https://github.com/erectbranch/ARM_System_Developers_Guide/tree/master/ch06/summary03)
 
    > Conditional Execution(Unsigned Comparison, Signed Comparison Cascading Conditions)
