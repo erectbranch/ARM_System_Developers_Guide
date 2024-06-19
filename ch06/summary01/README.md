@@ -407,9 +407,9 @@ ADD r0, r0, r1
 
 > ![load use](images/interlock_1_cycle_load_use.png)
 
-> 프로세서는 로드 명령이 LS1 단계를 완료하는 동안 파이프라인의 ALU 단계에서 한 사이클 동안 ADD 명령 정지(이탤릭체 ADD로 표시한 부분) 
+> 프로세서는 로드 명령이 LS1 단계를 완료하는 동안, 파이프라인의 ALU 단계에서 한 사이클 동안 `ADD` 실행을 중단한다(이탤릭체 *ADD*로 표시된 부분) 
 
-> LDR 명령은 파이프라인을 따라 진행되지만 ADD 명령은 멈춰 있기 때문에 두 명령 사이에 간격이 생긴다. 이 간격을 **pipeline bubble**이라고 부른다.
+> `LDR` 명령은 파이프라인을 따라 진행되지만 `ADD` 명령은 멈춰 있기 때문에 두 명령 사이에 간격이 생긴다. 이 간격을 **pipeline bubble**이라고 부른다.
 
 다음은 byte load instruction인 `LDRB`를 포함한 파이프라인의 동작 예시다.
 
@@ -491,5 +491,141 @@ case1
 </table>
 
 > ![branch instruction pipeline flush](images/pipeline_flush.png)
+
+---
+
+### 6.3.3 Scheduling of Load Instructions
+
+> 컴파일러 수준에서는 Aliasing 문제로 인해 최적화가 제한된다. (5.6절 참조) - 컴파일러는 두 포인터가 동일한 주소를 가리키지 않는 것이 확실하지 않으면, load를 save보다 앞으로 이동시킬 수 없기 때문이다.
+
+다음은 0으로 끝나는 입력 문자열 `*in`를 읽어와서, 출력 문자열 `*out`에 소문자로 변환하여 저장하는 `str_tolower()` 함수이다.  두 가지 대표적인 최적화 기법(**preloading**, **unrolling**)을 적용할 것이다.
+
+| Optimization | Description |
+| --- | --- |
+| **preloading** | 이전 루프의 종료 시점에서, 루프에 필요한 데이터를 미리 load한다. |
+| **unrolling** | 루프의 본문을 (`i`, `i + 1`, `i + 2`처럼) 언롤링하여 수행한다. |
+
+<table>
+<tr>
+<td> C code </td> <td> Assembly </td>
+</tr>
+<tr>
+<td>
+
+```c
+void str_tolower(char *out, char *in)
+{
+  unsigned int c;
+  do 
+  {
+    c = *(in++);
+    if (c>=’A’ && c<=’Z’)
+    {
+       c = c + (’a’ -’A’);
+    }
+    *(out++) = (char)c;
+  } while (c);
+}
+```
+
+</td>
+<td> 
+
+```assembly
+str_tolower
+        LDRB   r2, [r1], #1
+        SUB    r3, r2, #0x41 
+        CMP    r3, #0x19 
+        ADDLS  r2, r2, #0x20 
+        STRB   r2, [r0], #1 
+        CMP    r2, #0
+        BNE    str_tolower 
+        MOV    pc, r14
+
+
+
+        
+```
+
+</td>
+</tr>
+</table>
+
+> load instruction은 전체 명령어의 약 1/3을 차지할 수준으로 빈번하게 사용된다. 
+
+---
+
+#### 6.3.3.1 Load Scheduling by Preloading
+
+preloading을 사용하면, 코드 크기를 거의 늘리지 않고 load scheduling을 개선할 수 있다. 특히 ARM 아키텍처의 조건부 명령어를 활용하면 효율적으로 구현할 수 있다.
+
+단, 첫 번째와 마지막 루프에서 예외적인 처리가 필요하다. (루프 `i`에서 루프 `i + 1`의 데이터를 로드하는 특성 때문)
+
+| loop | description |
+| --- | --- |
+| 1st loop | 루프가 시작되기 전에 load 명령어를 추가하여 데이터를 preload. (`str_tolower_preload`) |
+| last loop | 루프에서 데이터를 읽지 않아야 한다. (배열의 끝을 넘어서 읽는 문제 발생) |
+    
+다음 코드(preload 적용 예제)의 마지막 루프에서는 byte load를 수행하지 않는다.
+
+```assembly
+out     RN 0                      ; pointer to output string
+in      RN 1                      ; pointer to input string
+c       RN 2                      ; character loaded
+t       RN 3                      ; scratch register
+
+        ; void str_tolower_preload(char *out, char *in)
+str_tolower_preload
+        LDRB    c, [in], #1       ; c = *(in++)
+loop
+        SUB     t, c, #'A'        ; t = c-'A'
+        CMP     t, #'Z'-'A'       ; if (t <= 'Z'-'A')
+        ADDLS   c, c, #'a'-'A'    ;   c += 'a'-'A';
+        STRB    c, [out], #1      ; *(out++) = (char)c;
+        TEQ     c, #0             ; test if c==0
+        LDRNEB  c, [in], #1       ; if (c!=0) { c=*in++;
+        BNE     loop              ;             goto loop; }
+        MOV     pc, lr            ; return
+```
+
+---
+
+#### 6.3.3.2 Load Scheduling by Unrolling
+
+unrolling을 통해, 루프 i의 결과가 준비되지 않아도, 루프 `i + 1` 작업을 수행한다. (적용하지 않으면, loop `i + 1`에서 `i`의 결과를 기다려야 한다.)
+
+```assembly
+out     RN 0                      ; pointer to output string
+in      RN 1                      ; pointer to input string
+ca0     RN 2                      ; character 0
+t       RN 3                      ; scratch register
+ca1     RN 12                     ; character 1
+ca2     RN 14                     ; character 2
+
+        ; void str_tolower_unrolled(char *out, char *in)
+str_tolower_unrolled
+        STMFD   sp!, {lr}         ; function entry
+loop_next3
+        LDRB    ca0, [in], #1     ; ca0 = *in++;
+        LDRB    ca1, [in], #1     ; ca1 = *in++;
+        LDRB    ca2, [in], #1     ; ca2 = *in++;
+        SUB     t, ca0, #'A'      ; convert ca0 to lower case
+        CMP     t, #'Z'-'A'
+        ADDLS   ca0, ca0, #'a'-'A'
+        SUB     t, ca1, #'A'      ; convert ca1 to lower case
+        CMP     t, #'Z'-'A'
+        ADDLS   ca1, ca1, #'a'-'A'
+        SUB     t, ca2, #'A'      ; convert ca2 to lower case
+        CMP     t, #'Z'-'A'
+        ADDLS   ca2, ca2, #'a'-'A'
+        STRB    ca0, [out], #1    ; *out++ = ca0;
+        TEQ     ca0, #0           ; if (ca0!=0)
+        STRNEB  ca1, [out], #1    ;   *out++ = ca1;
+        TEQNE   ca1, #0           ; if (ca0!=0 && ca1!=0)
+        STRNEB  ca2, [out], #1    ;   *out++ = ca2;
+        TEQNE   ca2, #0           ; if (ca0!=0 && ca1!=0 && ca2!=0)
+        BNE     loop_next3        ;   goto loop_next3;
+        LDMFD   sp!, {pc}         ; return;
+```
 
 ---
