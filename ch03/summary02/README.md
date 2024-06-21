@@ -58,6 +58,10 @@ backward                  ; infinite loop로 작동
 
 ## 3.3 Load-Store Instructions
 
+> `addressing` = `[<Rn>,+/-<Rm>{, <shift>}]{!}` 혹은 `[<Rn>],+/-<Rm>{, <shift>}`
+
+> `Rn`: base address register, `Rm`: offset register, `!`: writeback
+
 **load-store instruction**은 메모리와 레지스터 사이에서 데이터를 전송한다.
 
 ---
@@ -322,15 +326,27 @@ POST    r0 = 0x01010101 ; r1번지 값
 
 ---
 
-### 3.3.2 Multiple-Register Transfer
+### 3.3.2 Load-Store Doubleword
 
-단일 명령으로, 메모리와 복수 레지스터 사이에 데이터를 전송할 수 있다.
+ARMv5E부터 doubleword(64-bit) 단위의 load-store 명령어를 지원한다. 명령어의 특성상 연속된 `Rd` 및 `Rd+1` 레지스터를 활용한다.
 
-- \#cycles: 메모리 순차접근( $t$ cycles) vs $N$ 개 레지스터 다중 전송( $2+N * t$ cycles)
+- 이때 `Rd`는 짝수 레지스터여야 한다. (ex. `r0`, `r2`, `r4`...)
 
-  단, interrupt를 중단하므로 **인터럽트 지연**이 늘어날 수 있다.
+- offset이나 주소의 정렬 여부에 따라서, 1 cycle이 추가로 소요될 수 있다.
 
-> Syntax: `<LDM|STM>{<cond>}{addressing mode} Rn{!},<register list>{^}`
+> Syntax: `LDRD|STRD{<cond>} Rd, Rd+1, addressing`
+
+---
+
+### 3.3.3 Multiple-Register Transfer
+
+ARM에서는 메모리와 여러 개의 레지스터 사이에 데이터를 전송하기 위한 명령어를 제공한다. (`LDM`, `STM`) 
+
+- 메모리 순차 접근에 $t$ cycles이 걸린다고 가정하면, $N$ words 전송에 필요한 cycles 수는 $2+N * t$ 이다.
+
+- 단, 그동안 interrupt가 중단되므로 **interrupt latency**가 늘어날 수 있다.
+
+> Syntax: `<LDM|STM>{<cond>}{addressing mode} Rn{!},<register list>{^}` (`Rn`: 메모리 주소를 가리키는 base register, 아래 예시에서 `r10`.)
 
 | | | |
 | :---: | --- | --- |
@@ -339,9 +355,15 @@ POST    r0 = 0x01010101 ; r1번지 값
 
 ---
 
-#### 3.3.2.1 Addressing Mode for Load-Store Multiple
+#### 3.3.3.1 Addressing Mode for Load-Store Multiple
 
-이때, 다중 레지스터 전송 명령은 다양한 addressing mode에 따라 분류된다. 다음은 네 가지 addressing mode를 설명한 도표이다.
+다중 레지스터 전송 명령을 다양한 addressing mode와 조합할 수 있다. 다음은 `LDM|STM{addressing mode} r10, {r0, r1, r4}` 명령을 네 가지 addressing mode로 수행한 예시이다.
+
+- 문법: `{}` 내부에서 `-`나 `,`를 이용해서 레지스터를 나열할 수 있다.
+
+- 작은 번호의 레지스터부터 큰 번호의 레지스터 순서를 따라 load/store된다. (오름차순)
+
+![multiple-register transfer](images/multiple-register_transfer.png)
 
 | mode | Description | Start address | End address | Rn\! |
 | --- | --- | --- | --- | --- |
@@ -350,17 +372,11 @@ POST    r0 = 0x01010101 ; r1번지 값
 | DA | decrement after | `Rn-4*N+4` | `Rn` | `Rn-4*N` |
 | DB | decrement before | `Rn-4*N` | `Rn-4` | `Rn-4*N` |
 
-다음은 addressing mode별 `<LDMxx|STMxx>  r10,  {r0, r1, r4}` 명령 수행 후, 메모리 상태를 나타낸 그림이다.(`r10`: base register)
-
-![multiple-register transfer](images/multiple-register_transfer.png)
-
 ---
 
-#### 3.3.2.2 Multiple-Register Transfer Example
+#### 3.3.3.2 Multiple-Register Transfer Example
 
 다음 코드는 `LDMIA r0!, {r1-r3}` 명령 및 메모리 변화를 나타낸 예시다.
-
-> `{}` 내부에서 `-`나 `,`를 이용해서 레지스터를 나열할 수 있다.
 
 > write back에 따라, 0x80010에서 0x8001c로 증가
 
@@ -452,7 +468,7 @@ loop
 
 ---
 
-#### 3.3.2.3 Stack Operations
+#### 3.3.3.3 Stack Operations
 
 ARM은 스택 연산에서 다중 레지스터 전송 명령을 사용한다. 
 
@@ -514,7 +530,7 @@ POST
 
 ---
 
-### 3.3.3 Swap Instructions
+### 3.3.4 Swap Instructions
 
 **swap instruction**은 메모리와 레지스터 값을 교환한다.
 
