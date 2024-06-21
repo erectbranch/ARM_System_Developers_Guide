@@ -69,9 +69,9 @@ Morgan Kaufmann · 2004년 04월 08일 출간</b>
 
    > Branch Instructions(B, BL, BX, BLX)
 
-   > Single-Register Transfer(LDR, STR, LDRB, STRB, LDRH, STRH, LDRSB, LDRSH), Addressimg Mode(Preindex with writeback, Preindex, Postindex)
+   > Single-Register Transfer(LDR, STR, LDRB, STRB, LDRH, STRH, LDRSB, LDRSH), Addressing Mode(Preindex with writeback, Preindex, Postindex), Load and Store Doubleword(LDRD, STRD)
 
-   > Multiple-Register Transfer(LDM, STM), Addressimg Mode(IA, IB, DA, DB), Stack Operations(FA, FD, EA, ED)
+   > Multiple-Register Transfer(LDM, STM), Addressing Mode(IA, IB, DA, DB), Stack Operations(FA, FD, EA, ED)
   
  - [SWI, Program Status Register  Instructions, ARMv5E Extensions](https://github.com/erectbranch/ARM_System_Developers_Guide/tree/master/ch03/summary03)
 
