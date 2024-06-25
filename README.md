@@ -118,6 +118,12 @@ Morgan Kaufmann · 2004년 04월 08일 출간</b>
 
    > Instruction Scheduling(instruction cycles, ARM9TDMI pipeline), Pipeline Hazards, Loop Scheduling(Preloading, Unrolling)
 
+ - [Register Allocation](https://github.com/erectbranch/ARM_System_Developers_Guide/tree/master/ch06/summary02)
+
+   > Procedure Call(ATPCS, AAPCS)
+   
+   > Allocating Variables, Code Implementation to Reduce Register Usage
+
  - [Conditional Execution, Looping Constructs](https://github.com/erectbranch/ARM_System_Developers_Guide/tree/master/ch06/summary03)
 
    > Conditional Execution(Unsigned Comparison, Signed Comparison Cascading Conditions)
