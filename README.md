@@ -138,6 +138,16 @@ Morgan Kaufmann · 2004년 04월 08일 출간</b>
 </details>
 
 <details markdown="1">
+<summary><h3>🎛 Embedded System</h3></summary>
+
+ - [Firmware, Bootloader](https://github.com/erectbranch/ARM_System_Developers_Guide/tree/master/ch10/summary01)
+
+   > Boot Sequence, Bootloader
+
+   > Firmware(Set up Target Hardware, Hardware Abstraction, Load a Boot Image, Relinquish Control)
+</details>
+
+<details markdown="1">
 <summary><h3>⏰ Exception and Interrupt Handling</h3></summary>
 
  - [Exception Handling](https://github.com/erectbranch/ARM_System_Developers_Guide/tree/master/ch09/summary01)
